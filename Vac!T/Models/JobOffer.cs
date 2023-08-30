@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Vac_T.Models
 {
@@ -11,7 +10,8 @@ namespace Vac_T.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Level { get; set; }
-        public Company Company { get; set; }
+        public int CompanyId { get; set; }
+        public Company? Company { get; set; } = null!;
         //public string Image { get; set; }
 
         virtual public ICollection<UserJobOffer> UserJobOffers { get; set; }
