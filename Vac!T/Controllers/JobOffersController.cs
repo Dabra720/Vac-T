@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Vac_T.Contexts;
 using Vac_T.Models;
+using Microsoft.AspNetCore.Identity;
+using Vac_T.Areas.Identity.Data;
 
 namespace Vac_T.Controllers
 {
@@ -22,9 +25,29 @@ namespace Vac_T.Controllers
         // GET: JobOffers
         public async Task<IActionResult> Index()
         {
+            if (_context.JobOffers == null) return Problem("Entity set 'VacItContext is null'");
+
+            // Filter for Employers (Only own offers)
+            if (User.IsInRole("ROLE_EMPLOYER")) {
+                //var user = await _context.Users.Where(u => u.Email == User.Identity.Name).FirstAsync();
+
+                var currentUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                
+                var companyId = currentUser.CompanyId;
+
+                var jobOffers = await _context.JobOffers
+                    .Where(jo => jo.CompanyId == companyId)
+                    .ToListAsync();
+
+                return View(jobOffers);
+            }
+
+            return View(await _context.JobOffers.ToListAsync());
+
+            /*if (User.IsInRole("Admin")) { }
               return _context.JobOffers != null ? 
                           View(await _context.JobOffers.ToListAsync()) :
-                          Problem("Entity set 'VacItContext.JobOffers'  is null.");
+                          Problem("Entity set 'VacItContext.JobOffers'  is null.");*/
         }
 
         // GET: JobOffers/Details/5
@@ -46,6 +69,7 @@ namespace Vac_T.Controllers
         }
 
         // GET: JobOffers/Create
+        [Authorize(Roles = "ROLE_EMPLOYER, Admin")]
         public IActionResult Create()
         {
             return View();
@@ -71,6 +95,7 @@ namespace Vac_T.Controllers
         }
 
         // GET: JobOffers/Edit/5
+        [Authorize(Roles = "Admin, ROLE_EMPLOYER")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.JobOffers == null)
@@ -91,6 +116,7 @@ namespace Vac_T.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ROLE_EMPLOYER")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Title,Description,Level")] JobOffer jobOffer)
         {
             if (id != jobOffer.Id)
@@ -122,6 +148,7 @@ namespace Vac_T.Controllers
         }
 
         // GET: JobOffers/Delete/5
+        [Authorize(Roles = "Admin, ROLE_EMPLOYER")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.JobOffers == null)
@@ -142,6 +169,7 @@ namespace Vac_T.Controllers
         // POST: JobOffers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ROLE_EMPLOYER")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.JobOffers == null)

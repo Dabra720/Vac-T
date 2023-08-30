@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vac_T.Contexts;
 
@@ -11,9 +12,11 @@ using Vac_T.Contexts;
 namespace Vac_T.Migrations
 {
     [DbContext(typeof(VacItContext))]
-    partial class VacItContextModelSnapshot : ModelSnapshot
+    [Migration("20230830200836_CompanyIdLink")]
+    partial class CompanyIdLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

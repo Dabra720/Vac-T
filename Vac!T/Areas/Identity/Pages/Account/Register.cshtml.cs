@@ -31,13 +31,15 @@ namespace Vac_T.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Vac_TUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<Vac_TUser> userManager,
             IUserStore<Vac_TUser> userStore,
             SignInManager<Vac_TUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +47,7 @@ namespace Vac_T.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -123,6 +126,9 @@ namespace Vac_T.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Assign role:
+                    await _userManager.AddToRoleAsync(user, "ROLE_CANDIDATE");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -17,12 +17,14 @@ public class Vac_TUser : IdentityUser
     [Display(Name = "Gebruikersnaam")]
     public string Email { get; set; }
     [Display(Name = "Wachtwoord")]
-    public string Password { get; set; }*/
-    public string Role { get; set; } = "ROLE_CANDIDATE";
-    [ForeignKey("ProfileId")]
-    public UserProfile? Profile { get; set; }
-    [ForeignKey("CompanyId")]
-    public Company? Company { get; set; }
+    public string Password { get; set; }
+    public string Role { get; set; } = "ROLE_CANDIDATE";*/
+    //[ForeignKey("ProfileId")]
+    public int? ProfileId { get; set; }
+    public UserProfile Profile { get; set; }
+    //[ForeignKey("CompanyId")]
+    public int? CompanyId { get; set; }
+    public Company Company { get; set; }
     public ICollection<UserJobOffer> UserJobOffers { get; set; } // Opgeslagen joboffers
 
 }

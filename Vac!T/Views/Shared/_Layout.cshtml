@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Vac_T.Areas.Identity.Data;
+
+@inject SignInManager<Vac_TUser> SignInManager
+@inject UserManager<Vac_TUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,6 +30,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="JobOffers" asp-action="Index">Vacatures</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
