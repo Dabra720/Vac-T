@@ -31,7 +31,7 @@ namespace Vac_T.Controllers
             if (User.IsInRole("ROLE_EMPLOYER")) {
                 //var user = await _context.Users.Where(u => u.Email == User.Identity.Name).FirstAsync();
 
-                var currentUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                var currentUser = _context.Users.First(u => u.UserName == User.Identity.Name);
                 
                 var companyId = currentUser.CompanyId;
 
@@ -59,6 +59,7 @@ namespace Vac_T.Controllers
             }
 
             var jobOffer = await _context.JobOffers
+                .Include("Company")
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (jobOffer == null)
             {
@@ -80,8 +81,14 @@ namespace Vac_T.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ROLE_EMPLOYER")]
         public async Task<IActionResult> Create([Bind("Id,Date,Title,Description,Level")] JobOffer jobOffer)
         {
+            var currentUser = _context.Users
+                .Include("Company")
+                .First(u => u.UserName == User.Identity.Name);
+            //jobOffer.CompanyId = (int)currentUser.CompanyId;
+            jobOffer.Company = currentUser.Company;
             if (ModelState.IsValid)
             {
                 _context.Add(jobOffer);
@@ -89,7 +96,7 @@ namespace Vac_T.Controllers
                 return RedirectToAction(nameof(Index));
             } else
             {
-
+                Console.WriteLine("Modelstate not valid");
             }
             return View(jobOffer);
         }

@@ -18,6 +18,6 @@ namespace Vac_T.Models
         public Company? Company { get; set; }
         //public string Image { get; set; }
 
-        virtual public ICollection<UserJobOffer> UserJobOffers { get; set; }
+        virtual public ICollection<UserJobOffer>? UserJobOffers { get; set; }
     }
 }

@@ -74,8 +74,6 @@ namespace Vac_T
 
                     await userManager.AddToRoleAsync(user, "Admin");
                 }
-
-
             }
 
             app.Run();

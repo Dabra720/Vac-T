@@ -28,13 +28,11 @@ namespace Vac_T.Contexts
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
         }
 
 
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<UserJobOffer>()
+            /*modelBuilder.Entity<UserJobOffer>()
                 .HasOne(e => e.JobOffer)
                 .WithMany()
                 .HasForeignKey(e => e.JobOfferId)
@@ -46,7 +44,7 @@ namespace Vac_T.Contexts
                 .HasOne(e => e.User)
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-        }*/
+                .OnDelete(DeleteBehavior.NoAction);*/
+        
     }
 }
