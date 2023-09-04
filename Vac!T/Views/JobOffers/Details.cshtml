@@ -1,4 +1,4 @@
-﻿@model Vac_T.Models.JobOffer
+﻿@model JobOffer
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <div>
     <div class="row">
         <div class="col-2">
-            <img src="~/assets/logos/php.png" style="height: 80px" class="img-responsive" />
+            <img src="~/assets/logos/php-hex.png" style="height: 80px" class="img-responsive" />
         </div>
         <div class="col-10">
             <h4>@Html.DisplayFor(model => model.Date)</h4>
@@ -16,7 +16,7 @@
                 <div class="col-sm-6">
                     <h3>
                         <span style="color: red">
-                            @Html.DisplayNameFor(model => model.Level):
+                            @Html.DisplayNameFor(model => model.Level).ToUpper():
                         </span>
                         @Html.DisplayFor(model => model.Level)
                     </h3>
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    @if (User.IsInRole("Admin") || User.IsInRole("ROLE_CANDIDATE"))
+    @if (User.IsInRole("ROLE_CANDIDATE") || User.IsInRole("Admin"))
     {
         <div class="row">
             <div class="col-2"></div>
@@ -71,7 +71,7 @@
             </div>
         </div>
     }
-    @if (User.IsInRole("Admin") || User.IsInRole("ROLE_EMPLOYER"))
+    @if (User.IsInRole("ROLE_EMPLOYER") || User.IsInRole("Admin"))
     {
         <div class="row">
             <div class="col-2"></div>

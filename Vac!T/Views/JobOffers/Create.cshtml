@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" ></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,9 +32,9 @@
                 @* <input asp-for="Level" class="form-control" /> *@
                 <select asp-for="Level" class="form-select">
                     <option value="">Kies een niveau</option>
-                    <option value="Junior">Junior</option>
-                    <option value="Medior">Medior</option>
-                    <option value="Senior">Senior</option>
+                    <option value="JUNIOR">JUNIOR</option>
+                    <option value="MEDIOR">MEDIOR</option>
+                    <option value="SENIOR">SENIOR</option>
                 </select>
                 <span asp-validation-for="Level" class="text-danger"></span>
             </div>

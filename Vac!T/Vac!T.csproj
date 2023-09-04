@@ -29,4 +29,9 @@
     <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vac!T.Business\Vac!T.Business.csproj" />
+    <ProjectReference Include="..\Vac!T.DAL\Vac!T.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
