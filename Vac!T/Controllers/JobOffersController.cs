@@ -10,6 +10,7 @@ using Vac_T.Contexts;
 using Vac_T.Models;
 using Microsoft.AspNetCore.Identity;
 using Vac_T.Areas.Identity.Data;
+using System.Collections.Immutable;
 
 namespace Vac_T.Controllers
 {
@@ -60,11 +61,25 @@ namespace Vac_T.Controllers
 
             var jobOffer = await _context.JobOffers
                 .Include("Company")
-                .Include("JobOffers")
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (jobOffer == null)
             {
                 return NotFound();
+            }
+            else
+            {
+                if (User.IsInRole("ROLE_CANDIDATE") || User.IsInRole("Admin"))
+                {
+                    jobOffer.Company.JobOffers = _context.JobOffers
+                        .Where(j => j.CompanyId == jobOffer.CompanyId && j.Id != jobOffer.Id).ToList();
+                }
+                if(User.IsInRole("ROLE_EMPLOYER") || User.IsInRole("Admin"))
+                {
+                    jobOffer.UserJobOffers = _context.UserJobOffers
+                        .Where(j => j.JobOfferId == jobOffer.Id)
+                        .Include("User")
+                        .ToList();
+                }
             }
 
             return View(jobOffer);

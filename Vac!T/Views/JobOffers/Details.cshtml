@@ -15,16 +15,16 @@
             <div class="row justify-content-between">
                 <div class="col-sm-6">
                     <h3>
-                    <span style="color: red">
-                        @Html.DisplayNameFor(model => model.Level):
-                    </span>
-                    @Html.DisplayFor(model => model.Level)
+                        <span style="color: red">
+                            @Html.DisplayNameFor(model => model.Level):
+                        </span>
+                        @Html.DisplayFor(model => model.Level)
                     </h3>
                 </div>
                 <div class="col-sm-6">
                     <h3>
-                    <i class="fas fa-map-marker-alt"></i>
-                    @Html.DisplayFor(model => model.Company.City)
+                        <i class="fas fa-map-marker-alt"></i>
+                        @Html.DisplayFor(model => model.Company.City)
                     </h3>
                 </div>
                 <p>
@@ -41,29 +41,62 @@
             <span style="color:var(--orange);">SOLLICITEER DIRECT</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-10">
-            <h3>MEER VACATURES VAN <span>@Html.DisplayFor(model => model.Company.Name)</span></h3>
-            <table>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Level)
-                </th>
-                @* Hier hebben we alle vacatures nodig van dit bedrijf om doorheen te loopen*@
-                @foreach(var JobOffer in Model.Company.JobOffers)
-                {
-                    
-                }
-            </table>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("ROLE_CANDIDATE"))
+    {
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10">
+                <h3>MEER VACATURES VAN <span>@Html.DisplayFor(model => model.Company.Name)</span></h3>
+                <table>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Level)
+                    </th>
+                    @* Hier hebben we alle vacatures nodig van dit bedrijf om doorheen te loopen*@
+                    @foreach (var JobOffer in Model.Company.JobOffers)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelJobOffer => JobOffer.Date)</td>
+                            <td>@Html.DisplayFor(modelJobOffer => JobOffer.Title)</td>
+                            <td>@Html.DisplayFor(modelJobOffer => JobOffer.Level)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
         </div>
-    </div>
- </div>
+    }
+    @if (User.IsInRole("Admin") || User.IsInRole("ROLE_EMPLOYER"))
+    {
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10">
+                <table>
+                <h3>ALLE SOLLICITANTEN VOOR DEZE VACATURE:</h3>
+                    <th>
+                        Naam:
+                    </th>
+                    <th>
+                        Bekijk profiel:
+                    </th>
+                    @* Hier hebben we alle vacatures nodig van dit bedrijf om doorheen te loopen*@
+                    @foreach (var UserJobOffer in Model.UserJobOffers)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(UserJobOffers => UserJobOffer.User.UserName)</td>
+                            <td></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    }
+</div>
 <div>
     @if (User.IsInRole("Admin") || User.IsInRole("ROLE_EMPLOYER")){
         <a asp-action="Edit" asp-route-id="@Model?.Id">Wijzig</a><span> |</span>
