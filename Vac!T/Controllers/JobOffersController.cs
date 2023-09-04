@@ -60,6 +60,7 @@ namespace Vac_T.Controllers
 
             var jobOffer = await _context.JobOffers
                 .Include("Company")
+                .Include("JobOffers")
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (jobOffer == null)
             {

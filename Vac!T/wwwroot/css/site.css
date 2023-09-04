@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background-color: var(--orange);
 }
 
 
@@ -36,4 +36,15 @@ body {
 
 h1{
     font-family: var(--titles);
+}
+h2{
+    color: white;
+    font-family: var(--headings);
+}
+
+.bg-gray {
+    background-color: var(--gray);
+}
+.bg-orange {
+    background-color: var(--orange);
 }

@@ -9,52 +9,24 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Level)
-            </th>
-            @if(User.IsInRole("Admin") || User.IsInRole("ROLE_EMPLOYER"))
-            {
-                <th></th>
-            }
-        </tr>
-    </thead>
-    <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">
-                @Html.DisplayFor(modelItem => item.Title)
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Level)
-            </td>
-                @if (User.IsInRole("Admin") || User.IsInRole("ROLE_EMPLOYER"))
-            {
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            }
-        </tr>
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-3">
+                    <img src="~/assets/logos/php.png" style="height: 80px" class="img-responsive" />
+                </div>
+                <div class="col-9">
+                    <p>@Html.DisplayFor(modelItem => item.Date)</p>
+                    <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <a asp-action="Details" asp-route-id="@item.Id">
+                <i class="fas fa-arrow-right" style="font-size: 48px; color:white;"></i>
+            </a>
+        </div>
+    </div>
 }
-    </tbody>
-</table>
