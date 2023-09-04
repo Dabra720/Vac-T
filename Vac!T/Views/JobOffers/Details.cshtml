@@ -33,14 +33,18 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-2 justify-content-end">
-            <i class="fas fa-arrow-right" ></i>
+
+    @if (User.IsInRole("ROLE_CANDIDATE"))
+    {
+        <div class="row">
+            <div class="col-2 justify-content-end">
+                <i class="fas fa-arrow-right" ></i>
+            </div>
+            <div class="col-10">
+                <span style="color:var(--orange);">SOLLICITEER DIRECT</span>
+            </div>
         </div>
-        <div class="col-10">
-            <span style="color:var(--orange);">SOLLICITEER DIRECT</span>
-        </div>
-    </div>
+    }
 
     @if (User.IsInRole("ROLE_CANDIDATE") || User.IsInRole("Admin"))
     {
